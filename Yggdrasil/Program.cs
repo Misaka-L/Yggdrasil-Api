@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<HttpClient>(_ => {
     var client = new HttpClient();
     client.BaseAddress = new Uri("http://localhost:5566/");
-    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "");
+    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "{DO NO USER IN PRODUCTION ENVIRONMENT}");
     client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("YggdrasilApi", "0.0.1"));
 
     return client;

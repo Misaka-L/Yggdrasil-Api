@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Yggdrasil.Models.YggdrasilApi {
+﻿namespace Yggdrasil.Models.YggdrasilApi {
     public class UploadSkinFromData {
         public string Model { get; set; }
     }

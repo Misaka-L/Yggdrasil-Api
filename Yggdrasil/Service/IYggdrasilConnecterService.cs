@@ -7,7 +7,7 @@ namespace Yggdrasil.Service {
         ValueTask<YggdrasilProfile> GetUserSelectedProfile(Guid uuid);
         ValueTask<YggdrasilUser> GetUser(Guid uuid);
         ValueTask<YggdrasilProfile> SetUserSelectedProfile(Guid userId, Guid uuid);
-        ValueTask<YggdrasilProfile?> GetProfile(Guid uuid);
+        ValueTask<YggdrasilProfile?> GetProfile(Guid uuid, bool unsigned = true);
         ValueTask<YggdrasilProfile[]> GetProfilesByNames(string[] userNames);
     }
 }

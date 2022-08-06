@@ -1,13 +1,17 @@
-﻿using System.Net.Http.Headers;
+﻿using Microsoft.Extensions.Options;
+using System.Net.Http.Headers;
 using Yggdrasil.Models.Connecter;
+using Yggdrasil.Models.Options;
 using Yggdrasil.Models.Yggdrasil;
 
 namespace Yggdrasil.Service {
     public class YggdrasilConnecterService : IYggdrasilConnecterService {
         private readonly HttpClient _client;
+        private readonly YggdrasilOption _yggdrasilOption;
 
-        public YggdrasilConnecterService(HttpClient client) {
+        public YggdrasilConnecterService(HttpClient client, IOptions<YggdrasilOption> yggdrasilOption) {
             _client = client;
+            _yggdrasilOption = yggdrasilOption.Value;
         }
 
         public async ValueTask<YggdrasilUser> AuthenticateAsync(string username, string password) {
@@ -35,8 +39,12 @@ namespace Yggdrasil.Service {
             throw new Exception("login fail");
         }
 
-        public async ValueTask<YggdrasilProfile?> GetProfile(Guid uuid) {
-            return (await _client.GetFromJsonAsync<ApiResponse<ApiProfile>>($"/api/yggdrasilprofile/uuid?uuid={uuid}")).data.ToYggdrasilProfile();
+        public async ValueTask<YggdrasilProfile?> GetProfile(Guid uuid, bool unsigned = true) {
+            if (unsigned) {
+                return (await _client.GetFromJsonAsync<ApiResponse<ApiProfile>>($"/api/yggdrasilprofile/uuid?uuid={uuid}")).data.ToYggdrasilProfile();
+            } else {
+                return (await _client.GetFromJsonAsync<ApiResponse<ApiProfile>>($"/api/yggdrasilprofile/uuid?uuid={uuid}")).data.ToYggdrasilProfileSign(_yggdrasilOption.PrivateKey);
+            }
         }
 
         public ValueTask<YggdrasilProfile[]> GetProfilesByNames(string[] userNames) {

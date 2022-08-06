@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.Security.Claims;
 using System.Text.Json;
 using Yggdrasil.Models.YggdrasilApi;
 using Yggdrasil.Service;

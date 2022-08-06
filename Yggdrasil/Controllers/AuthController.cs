@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Yggdrasil.Filters;
 using Yggdrasil.Models.YggdrasilApi;
@@ -14,7 +13,7 @@ namespace Yggdrasil.Controllers {
     [AuthorizationFilter]
     public class AuthController : ControllerBase {
         private readonly YggdrasilService _yggdrasilService;
-        
+
         public AuthController(YggdrasilService yggdrasilService) {
             _yggdrasilService = yggdrasilService;
         }

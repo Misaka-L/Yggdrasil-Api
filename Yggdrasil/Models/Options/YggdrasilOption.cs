@@ -16,7 +16,7 @@
         /// 材质域名白名单
         /// </summary>
         public string[] SkinDomains { get; set; } = new string[0];
-        
+
         /// <summary>
         /// 是否支持使用邮箱之外的凭证登录（如角色名登录）
         /// </summary>
@@ -52,5 +52,9 @@
         ///         * 冒犯性内容过滤(禁用后默认关闭)
         /// </remarks>
         public bool IsMojangAntiEnabled { get; set; } = false;
+        /// <summary>
+        /// 用于角色属性签名的私匙
+        /// </summary>
+        public string PrivateKey { get; set; }
     }
 }

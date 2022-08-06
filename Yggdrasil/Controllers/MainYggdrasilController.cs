@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Yggdrasil.Helper;
 using Yggdrasil.Models.Options;
 using Yggdrasil.Models.YggdrasilApi;
 
@@ -34,9 +35,10 @@ namespace Yggdrasil.Controllers {
                         Register = _yggdrasilOption.RegisterLink
                     }
                 },
-                SkinDomains = _yggdrasilOption.SkinDomains
+                SkinDomains = _yggdrasilOption.SkinDomains,
+                SignaturePublickey = RSAHelper.GetPublicKey(_yggdrasilOption.PrivateKey)
             };
         }
-        
+
     }
 }

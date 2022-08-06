@@ -1,5 +1,4 @@
-﻿using System;
-using Yggdrasil.Models.Yggdrasil;
+﻿using Yggdrasil.Models.Yggdrasil;
 
 namespace Yggdrasil.Service {
     public class YggdrasilExampleConnecterService : IYggdrasilConnecterService {
@@ -9,7 +8,7 @@ namespace Yggdrasil.Service {
             };
         }
 
-        public async ValueTask<YggdrasilProfile?> GetProfile(Guid uuid) {
+        public async ValueTask<YggdrasilProfile?> GetProfile(Guid uuid, bool unsigned = true) {
             return new YggdrasilProfile { Id = uuid, Name = "test" }.AddBase64JsonPropertie("textures", new YggdrasilProfileTexture {
                 ProfileId = uuid,
                 ProfileName = "test"

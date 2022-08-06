@@ -15,7 +15,7 @@ namespace Yggdrasil.Filters {
             });
 
             logger.LogError(context.Exception, "{0} 访问 {1} 时发生错误", context.HttpContext.Connection.RemoteIpAddress, context.HttpContext.Request.Path);
-            
+
             await Task.CompletedTask;
         }
     }

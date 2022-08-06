@@ -139,7 +139,7 @@ namespace Yggdrasil.Service {
         }
 
         public async ValueTask<YggdrasilProfile?> GetProfile(Guid uuid, bool unsigned = true) {
-            return await _yggdrasilConnecterService.GetProfile(uuid);
+            return await _yggdrasilConnecterService.GetProfile(uuid, unsigned);
         }
 
         public async ValueTask<YggdrasilProfile[]> GetProfilesByNames(string[] userNames) {
