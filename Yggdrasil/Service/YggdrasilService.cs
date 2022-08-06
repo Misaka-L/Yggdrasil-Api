@@ -23,27 +23,33 @@ namespace Yggdrasil.Service {
         }
 
         public async ValueTask<AuthenticateResponse> AuthenticateAsync(string username, string password, Guid? clientToken = null) {
-            var user = await _yggdrasilConnecterService.AuthenticateAsync(username, password);
-            var availableProfiles = await _yggdrasilConnecterService.GetUserProfiles(user.Id);
-            var selectedProfile = await _yggdrasilConnecterService.GetUserSelectedProfile(user.Id);
+            try {
+                var user = await _yggdrasilConnecterService.AuthenticateAsync(username, password);
+                var availableProfiles = await _yggdrasilConnecterService.GetUserProfiles(user.Id);
+                var selectedProfile = await _yggdrasilConnecterService.GetUserSelectedProfile(user.Id);
 
-            var accessToken = getToken(user, selectedProfile);
+                var accessToken = getToken(user, selectedProfile);
 
-            var response = new AuthenticateResponse {
-                User = user,
-                AvailableProfiles = availableProfiles,
-                SelectedProfile = selectedProfile,
-                AccessToken = accessToken
-            };
+                var response = new AuthenticateResponse {
+                    User = user,
+                    AvailableProfiles = availableProfiles,
+                    SelectedProfile = selectedProfile,
+                    AccessToken = accessToken
+                };
 
-            if (clientToken.HasValue) {
-                response.ClientToken = clientToken.GetValueOrDefault().ToString("N");
-            } else {
-                response.ClientToken = Guid.NewGuid().ToString("N");
+                if (clientToken.HasValue) {
+                    response.ClientToken = clientToken.GetValueOrDefault().ToString("N");
+                } else {
+                    response.ClientToken = Guid.NewGuid().ToString("N");
+                }
+
+                _logger.LogInformation("{0}({1}) 验证成功", username, user.Id);
+                return response;
+
+            } catch (Exception ex) {
+                _logger.LogError(ex, "{0} 验证失败", username);
+                throw new Exception("Invalid credentials. Invalid username or password.");
             }
-
-            _logger.LogInformation("{0}({1}) 验证成功", username, user.Id);
-            return response;
         }
 
         public async ValueTask<AuthenticateResponse> RefreshAsync(Guid uuid, Guid? selectProfile, Guid? clientToken = null) {
